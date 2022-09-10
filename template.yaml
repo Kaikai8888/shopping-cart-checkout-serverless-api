@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  shopping-cart-checkout
+  
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  ShoppingCartCheckoutFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api/
+      Handler: app.lambdaHandler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      Events:
+        Root:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: get
+        Authenticate:
+          Type: HttpApi 
+          Properties:
+            Path: /api/authenticate
+            Method: post
+        PostUser:
+          Type: HttpApi 
+          Properties:
+            Path: /api/user
+            Method: post
+        DeleteUser:
+          Type: HttpApi 
+          Properties:
+            Path: /api/user/{userID}
+            Method: delete
+        PostProduct:
+          Type: HttpApi 
+          Properties:
+            Path: /api/product
+            Method: post
+        DeleteProduct:
+          Type: HttpApi 
+          Properties:
+            Path: /api/product/{productID}
+            Method: delete
+        PostOrder:
+          Type: HttpApi 
+          Properties:
+            Path: /api/order
+            Method: post
+        GetOrder:
+          Type: HttpApi 
+          Properties:
+            Path: /api/order
+            Method: get
+Outputs:
+  ShoppingCartCheckoutApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
+

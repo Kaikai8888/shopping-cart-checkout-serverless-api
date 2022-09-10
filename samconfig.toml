@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "shopping-cart-checkout"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-112nfzlr8nmz3"
+s3_prefix = "shopping-cart-checkout"
+region = "ap-southeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+image_repositories = []
