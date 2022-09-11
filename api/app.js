@@ -28,5 +28,9 @@ app.delete('/api/product/:id', authenticate, controller.product.delete)
 app.post('/api/order', authenticate, controller.order.create)
 app.get('/api/order', authenticate, controller.order.get)
 
+app.use((error, req, res, next) => {
+    console.log(error)
+    return res.status('500').json({ status: 'error', message: 'Internal error occurs' })
+})
 
 exports.lambdaHandler = serverless(app)
