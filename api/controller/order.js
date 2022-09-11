@@ -18,21 +18,19 @@ module.exports = {
       const session = await db.startSession()
       session.startTransaction()
       try {
-        let products = await Product.find({ id: { $in: uniqueItemIDs } }).session(session)
-        if (uniqueItemIDs.length < products.length) {
+        let products = await Product.find({ _id: uniqueItemIDs }).session(session)
+        if (uniqueItemIDs.length > products.length) {
           await session.abortTransaction()
           session.endSession()
           return res.status(400).json({ status: 'error', message: 'Some products not found' })
         }
 
-        console.log(products[0].id, products[0])
-
         // check stock
-        let groupedProducts = _(products).groupBy('_id')
+        let groupedProducts = _.groupBy(products, (e) => e._id.toString())
         let orderItems = []
-        for (let _items of groupedItems) {
-          let id = _items[0]._id
-          let product = groupedProducts[id][0]
+        for (let [id, _items] of Object.entries(groupedItems)) {
+          let product = groupedProducts[id] && groupedProducts[id][0]
+          if (!product) return res.status(400).json({ status: 'error', message: 'Product not found: ' + id }) 
           let totalQuantity = _.sumBy(_items, 'quantity')
           if (totalQuantity > product.quantity) {
             await session.abortTransaction()
@@ -46,13 +44,14 @@ module.exports = {
           await product.save()
         }
         
-        const order = await Order.create([{ user: userID }], { session })
-        orderItems.forEach(e => e.order = order.id)
+        const orders = await Order.create([{ user: userID }], { session })
+        const orderID = orders[0]._id
+        orderItems.forEach(e => e.order = orderID)
         await OrderItem.create(orderItems, { session })
 
         await session.commitTransaction();
         session.endSession();
-        return res.json({ status: 'success', result: { id: order.id } })
+        return res.json({ status: 'success', result: { id: orderID } })
 
       } catch (err) {
         await session.abortTransaction();

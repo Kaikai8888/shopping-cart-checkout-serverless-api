@@ -12,7 +12,7 @@ module.exports = {
         name, email,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       })
-      return res.json({ status: 'success', result: { id: user.id } })
+      return res.json({ status: 'success', result: { id: user._id } })
     } catch (err) {
       next(err)
     }
