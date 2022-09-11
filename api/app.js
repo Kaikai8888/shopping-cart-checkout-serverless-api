@@ -7,6 +7,7 @@ const controller = require('./controller')
 
 require('./config/mongoose');
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(passport.initialize())
 
 function authenticate(req, res, next) {
