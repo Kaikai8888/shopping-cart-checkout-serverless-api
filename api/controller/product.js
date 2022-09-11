@@ -15,8 +15,9 @@ module.exports = {
     try {
       let id = req.params.id
       if (!id) return res.status(400).json({ status: 'error', message: 'Missing product id.' })
-      let product = await Product.findById(id)
+      let product = await Product.findById(id).populate('orders').lean()
       if (!product) return res.status(400).json({ status: 'error', message: 'Product not found' })
+      if (product.orders && product.orders.length) return res.status(400).json({ status: 'error', message: 'Cannot delete product that has been ordered' })
       await Product.deleteOne({ _id: id })
       return res.json({ status: 'success' })
     } catch (err) {

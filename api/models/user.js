@@ -26,6 +26,15 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
     required: true
   },
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
+
+userSchema.virtual('orders', {
+  ref: 'Order',
+  localField: '_id',
+  foreignField: 'user'
 })
 
 module.exports = mongoose.model('User', userSchema)

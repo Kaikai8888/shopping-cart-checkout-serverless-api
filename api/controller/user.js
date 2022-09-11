@@ -21,8 +21,9 @@ module.exports = {
     try {
       let id = req.params.id
       if (!id) return res.status(400).json({ status: 'error', message: 'Missing user id.' })
-      let user = await User.findById(id)
+      let user = await User.findById(id).populate('orders').lean()
       if (!user) return res.status(400).json({ status: 'error', message: 'User not found' })
+      if (user.orders && user.orders.length) return res.status(400).json({ status: 'error', message: 'Cannot remove user who has ordered products.' })
       await User.deleteOne({ _id: id })
       return res.json({ status: 'success' })
     } catch (err) {

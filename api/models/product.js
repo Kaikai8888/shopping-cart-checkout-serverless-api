@@ -26,6 +26,15 @@ const productSchema = new Schema({
     default: Date.now,
     required: true
   },
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
+
+productSchema.virtual('orders', {
+  ref: 'OrderItem',
+  localField: '_id',
+  foreignField: 'product'
 })
 
 module.exports = mongoose.model('Product', productSchema)
