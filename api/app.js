@@ -2,9 +2,8 @@ const serverless = require('serverless-http')
 const express = require('express')
 const app = express()
 const passport = require('./config/passport')
-const settings = require('./config/settings')
-const jwt = require('jsonwebtoken')
 const bodyParser = require('body-parser')
+const controller = require('./controller')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
@@ -17,27 +16,17 @@ app.get('/', function (req, res) {
     res.send('This is shopping cart checkout API endpoint.')
 })
 
-app.post('/api/authenticate', function (req, res) {
-    let payload = {
-        id: 1,
-        name: 'test'
-    }
-    const token = jwt.sign(payload, settings.jwt_secret, { expiresIn: '7d' })
-    res.json({ status: 'success', token })
-})
+app.post('/api/authenticate', controller.authenticate)
 
-app.post('/api/user', authenticate, function (req, res) {
-    res.send('post USER!')
-})
+app.post('/api/user', authenticate, controller.user.create)
 
-app.delete('/api/user/:id', authenticate, function (req, res) {
-})
+app.delete('/api/user/:id', authenticate, controller.user.delete)
 
-app.post('/api/product', authenticate, function() {})
-app.delete('/api/product/:id', authenticate, function () { })
+app.post('/api/product', authenticate, controller.product.create)
+app.delete('/api/product/:id', authenticate, controller.product.delete)
 
-app.post('/api/order', authenticate, function () { })
-app.get('/api/order', authenticate, function () { })
+app.post('/api/order', authenticate, controller.order.create)
+app.get('/api/order', authenticate, controller.order.get)
 
 
 exports.lambdaHandler = serverless(app)
