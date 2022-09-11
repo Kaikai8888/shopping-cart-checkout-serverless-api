@@ -1,8 +1,8 @@
 const serverless = require('serverless-http')
 const express = require('express')
 const app = express()
-const passport = require('./passport')
-const settings = require('./settings')
+const passport = require('./config/passport')
+const settings = require('./config/settings')
 const jwt = require('jsonwebtoken')
 const bodyParser = require('body-parser')
 
@@ -40,4 +40,4 @@ app.post('/api/order', authenticate, function () { })
 app.get('/api/order', authenticate, function () { })
 
 
-exports.lambdaHandler = serverless(app);
+exports.lambdaHandler = serverless(app)
