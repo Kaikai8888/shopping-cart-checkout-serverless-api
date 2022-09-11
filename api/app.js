@@ -5,6 +5,7 @@ const passport = require('./config/passport')
 const bodyParser = require('body-parser')
 const controller = require('./controller')
 
+require('./config/mongoose');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
 
