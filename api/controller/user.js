@@ -1,7 +1,7 @@
 const { User } = require('../models')
 const bcrypt = require('bcryptjs')
 
-modules.exports = {
+module.exports = {
   async create(req, res, next) {
     try {
       let { name, email, password } = req.body

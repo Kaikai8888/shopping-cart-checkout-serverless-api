@@ -1,6 +1,6 @@
 const { Product } = require('../models')
 
-modules.exports = {
+module.exports = {
   async create(req, res, next) {
     try {
       let { name, price, quantity } = req.body

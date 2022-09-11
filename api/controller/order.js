@@ -3,7 +3,7 @@ const _ = require('lodash')
 const db = require('../config/mongoose')
 const product = require('../models/product')
 
-modules.exports = {
+module.exports = {
   async create(req, res, next) {
     try {
       let { user_id: userID, items } = req.body
