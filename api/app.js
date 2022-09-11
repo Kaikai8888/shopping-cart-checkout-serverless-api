@@ -3,11 +3,13 @@ const express = require('express')
 const app = express()
 const passport = require('./config/passport')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const controller = require('./controller')
 
 require('./config/mongoose');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(methodOverride('_method'))
 app.use(passport.initialize())
 
 function authenticate(req, res, next) {
@@ -32,7 +34,7 @@ app.get('/api/order', authenticate, controller.order.get)
 
 app.use((error, req, res, next) => {
     console.log(error)
-    return res.status('500').json({ status: 'error', message: 'Internal error occurs' })
+    return res.status(500).json({ status: 'error', message: 'Internal error occurs' })
 })
 
 exports.lambdaHandler = serverless(app)
