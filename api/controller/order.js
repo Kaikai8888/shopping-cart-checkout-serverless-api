@@ -64,7 +64,10 @@ module.exports = {
   },
   async get(req, res, next) {
     try {
-      let orders = await Order.find().lean()
+      let orders = await Order.find({}, '_id user items created_at updated_at').populate([
+        { path: 'items', select: ['order', 'product', 'price', 'quantity'], populate: { path: 'product', select: 'name' }}, 
+        { path: 'user', select: ['name', 'email']}
+      ]).lean()
       return res.status(400).json({ status: 'success', result: orders })
     } catch (err) {
       next(err)

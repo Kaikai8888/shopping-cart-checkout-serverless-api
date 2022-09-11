@@ -17,6 +17,15 @@ const orderSchema = new Schema({
     default: Date.now,
     required: true
   },
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
+
+orderSchema.virtual('items', {
+  ref: 'OrderItem',
+  localField: '_id',
+  foreignField: 'order'
 })
 
 module.exports = mongoose.model('Order', orderSchema)
