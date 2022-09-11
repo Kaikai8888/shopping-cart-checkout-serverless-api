@@ -46,7 +46,7 @@ module.exports = {
           await product.save()
         }
         
-        const order = await Order.create([{ user: userID }], { session }).lean()
+        const order = await Order.create([{ user: userID }], { session })
         orderItems.forEach(e => e.order = order.id)
         await OrderItem.create(orderItems, { session })
 
@@ -65,7 +65,7 @@ module.exports = {
   },
   async get(req, res, next) {
     try {
-      let orders = await Order.find().lean();
+      let orders = await Order.find().lean()
       return res.status(400).json({ status: 'success', result: orders })
     } catch (err) {
       next(err)
