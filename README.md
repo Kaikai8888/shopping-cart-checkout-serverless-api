@@ -51,10 +51,12 @@ Generate JWT token with API user account.
 * **HTTP Method**: POST
 * **Path**: /api/authenticate
 * **Request Body**: 
+
 | API Fields | Type   | Mandatory | Details |
 | -----------|--------|-----------|---------|
 | email      | string | yes       | API user email |
 | password   | string | yes       | API user password|
+
 * **Request Body Example**:
 ```json
 {
@@ -98,11 +100,13 @@ Create normal user (not API user)
 * **Path**: /api/user
 * **Request Header Authorization**: Bearer token
 * **Request Body**: 
+
 | API Fields | Type   | Mandatory | Details |
 | -----------|--------|-----------|---------|
 | name       | string | yes       | user name  |
 | email      | string | yes       | user email (cannot use duplicate email)|
 | password   | string | yes       | user password (>= 8 characters)|
+
 * **Request Body Example**:
 ```json
 {
@@ -261,6 +265,7 @@ Example:
 * **Path**: /api/order
 * **Request Header Authorization**: Bearer token
 * **Request Body**: 
+
 | API Fields | Type   | Mandatory | Details |
 | -----------|--------|-----------|---------|
 | user_id    | string | yes       | user id  |
@@ -271,6 +276,7 @@ Item object format:
 | -----------|--------|-----------|---------|
 | id         | string | yes       | product id  |
 | quantity   | number | yes       | order item quantity|
+
 * **Request Body Example**:
 ```json
 {
