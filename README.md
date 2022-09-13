@@ -414,12 +414,6 @@ Example:
 
 
 ## Test
-### Postman Collection
-1. import test collection into Postman
-2. update API endpoint, and add `/api` path)
-![update api endpoint](./screenshot/update_postman_endpoint.png)
-3. update API user's email and password in `Authenticate` request body
-4. After `Authenticate` request, token in collection variable will be updated automatically, so can directly call other APIs
 
 ### Suggested Test Cases
 #### Authenticate
