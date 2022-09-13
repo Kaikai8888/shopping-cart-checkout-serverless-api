@@ -34,7 +34,7 @@ app.get('/api/order', authenticate, controller.order.get)
 
 app.use((error, req, res, next) => {
     console.log(error)
-    return res.status(500).json({ status: 'error', message: 'Internal error occurs' })
+    return res.status(500).json({ status: 'error', message: 'Internal error occurred' })
 })
 
 exports.lambdaHandler = serverless(app)
