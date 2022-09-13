@@ -184,11 +184,13 @@ Example:
 * **Path**: /api/product
 * **Request Header Authorization**: Bearer token
 * **Request Body**: 
+
 | API Fields | Type   | Mandatory | Details |
 | -----------|--------|-----------|---------|
 | name       | string | yes       | product name  |
 | price      | number | yes       | product price |
 | quantity   | number | yes       | product quantity (>= 0)|
+
 * **Request Body Example**:
 ```json
 {
